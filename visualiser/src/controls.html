@@ -1,0 +1,48 @@
+<div class="pure-form pure-form-stacked">
+    <fieldset class="pure-form-aligned">
+        <legend>Communication</legend>
+        <label for="comm-port">Port</label>
+        <div class="pure-control-group">
+            <select id="comm-port" name="port">
+            </select>
+            <span class="pure-form-message-inline">
+                <button id="connect" class="pure-button">Connect</button>
+            </span>
+        </div>
+    </fieldset>
+    <fieldset class="pure-form-aligned">
+        <legend>Settings</legend>
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <label for="sample-rate">Sample Rate</label>
+                <div class="pure-control-group">
+                    <select id="sample-rate" name="rampleRate">
+                    </select>
+                    <span class="pure-form-message-inline" id="sample-rate-info"></span>
+                </div>
+            </div>
+            <div class="pure-u-1-2">
+                <label>Trigger</label>
+                <label for="trigger-off" class="pure-radio">
+                    <input type="radio" id="trigger-off" name="triggering" value="0" checked="" /> OFF</label>
+                <label for="trigger-rise" class="pure-radio">
+                    <input type="radio" id="trigger-rise" name="triggering" value="1" /> Rise</label>
+                <label for="trigger-fall" class="pure-radio">
+                    <input type="radio" id="trigger-fall" name="triggering" value="-1" /> Fall</label>
+                <label for="trigger-level">Level</label>
+                <select id="trigger-level" name="triggerLevel"></select>    
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="pure-form-aligned">
+        <legend>Recordings</legend> 
+        <button id="save" class="pure-button">Save current slope</button>
+        <span class="pure-form-message-inline">
+            <label for="save-display">
+                <input type="checkbox" name="save-display" id="save-display"/> show saved slope</label>
+        </span>
+    </fieldset>
+    <fieldset>
+        <button id="acquire" class="button-xlarge pure-button pure-button-primary">Acquire</button>
+    </fieldset>
+</div>
