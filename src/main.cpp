@@ -43,6 +43,7 @@ void dataReceived(char key, int16_t value) {
         case 'r':
                 // sample rate
                 settings.sample_rate = value;
+                oscillo->setSampleRate(settings.sample_rate);
             break;
     }
 }
