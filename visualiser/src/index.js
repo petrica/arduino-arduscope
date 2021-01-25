@@ -89,6 +89,9 @@ function receive(key, value) {
         case 'ports':
                 controls.setSerialPorts(value);
             break;
+        case 't':
+                console.log('Timer', value);
+            break;
         case 'v':
                 visualiser.display(value);
                 if (isAcquire) acquire();

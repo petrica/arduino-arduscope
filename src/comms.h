@@ -28,6 +28,7 @@ class Comms
     public:
         Comms(unsigned long baud, ReceiveCallback callback);
 
+        void begin();
         void receive();
 
         template<typename T>
@@ -50,6 +51,7 @@ class Comms
         char buffer_[COMM_BUFFER_SIZE];
         boolean is_packet_started_ = false;
         const ReceiveCallback callback_;
+        const unsigned long baud_;
 
     void decodePacket();
 

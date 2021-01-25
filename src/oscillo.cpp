@@ -23,8 +23,6 @@ void Oscillo::setSampleRate(uint16_t sample_rate) {
                 TCCR1B &= ~(1 << CS12) & ~(1 << CS11);
                 TCCR1B |= 1 << CS10;
                 OCR1A = 320;
-                Serial.println(ADCSRA, BIN);
-                Serial.println(TCCR1B, BIN);
             break;
         case 25000:
                 // ADC 38.5KHz
@@ -132,7 +130,7 @@ void Oscillo::initTimer() {
     // disable interrupt
     TIMSK1 = 0x00;
     // output compare registry A, timer cycle default to 0, this is updated before starting conversion
-    OCR1A = 0x0000;
+    OCR1A = 0x00;
     // output compare regitry B default to 0
-    OCR1B = 0x0000; 
+    OCR1B = 0x00; 
 }

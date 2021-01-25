@@ -1,7 +1,10 @@
 #include <comms.h>
 
-Comms::Comms(unsigned long baud, ReceiveCallback callback) : callback_(callback) {
-    Serial.begin(baud);
+Comms::Comms(unsigned long baud, ReceiveCallback callback) : callback_(callback), baud_(baud) {
+}
+
+void Comms::begin() {
+    Serial.begin(baud_);
 }
 
 void Comms::send(char key, uint16_t value) {
