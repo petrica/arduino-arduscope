@@ -45,7 +45,7 @@ class Comms
             Serial.print(COMM_SEND_END_CHAR);
         }
 
-        void send(char key, uint16_t value);
+        void send(char key, uint32_t value);
 
     private:
         char buffer_[COMM_BUFFER_SIZE];

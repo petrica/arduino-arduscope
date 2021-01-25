@@ -14,8 +14,7 @@ void dataReceived(char key, int16_t value);
 Comms comms(SERIAL_BAUD, &dataReceived);
 Oscillo oscillo(ADC_PIN);
 Acquire acquire;
-//Generator generator;
-uint32_t timer;
+Generator generator;
 
 void dataReceived(char key, int16_t value) {
     switch (key) {
@@ -53,11 +52,13 @@ void advertiseCapabilities() {
 
 void setup() {
     comms.begin();
+    oscillo.init();
+    generator.init();
 
     advertiseCapabilities();
 
     sei();
-    //generator.start();
+    generator.start();
 }
 
 void loop() {
@@ -68,13 +69,11 @@ void loop() {
         is_started = false;
         acquire.reset();
         oscillo.start();
-        timer = micros();
     }
 
     // send data to UI
     if (acquire.hasData()) {
         oscillo.stop();
-        comms.send('t', micros() - timer);
         comms.send('v', acquire.getBuffer(), acquire.getBufferSize());
     }
 }

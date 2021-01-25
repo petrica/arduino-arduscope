@@ -2,7 +2,7 @@
 
 #define OC2A_PIN 11
 
-Generator::Generator() {
+void Generator::init() {
     initTimer();
 }
 
@@ -15,8 +15,8 @@ void Generator::initTimer() {
     // Set mode 7 to count up to OCR2A 
     TCCR2A |= 1 << WGM21 | 1 << WGM20;
     TCCR2B  = 1 << WGM22;
-    // Set frequency to 1Khz, 2Khz toggle half a period
-    OCR2A = 125;
+    // Set frequency to 500hz, 1Khz toggle half a period
+    OCR2A = 250;
 }
 
 void Generator::start() {

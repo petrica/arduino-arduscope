@@ -5,6 +5,8 @@ class Oscillo
     public:
         Oscillo(uint8_t in_pin);
 
+        void init();
+
         void setSampleRate(uint16_t sample_rate);
         void getCapableSampleRates(uint16_t *sample_rates, size_t size);
 

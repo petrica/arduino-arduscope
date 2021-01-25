@@ -7,7 +7,7 @@ void Comms::begin() {
     Serial.begin(baud_);
 }
 
-void Comms::send(char key, uint16_t value) {
+void Comms::send(char key, uint32_t value) {
     Serial.print(COMM_SEND_BEGIN_CHAR);
     Serial.print(key);
     Serial.print(COMM_SEND_SEPARATOR_CHAR);

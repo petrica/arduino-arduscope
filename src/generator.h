@@ -3,7 +3,7 @@
 class Generator
 {
     public:
-        Generator();
+        void init();
         void start();
         void stop();
 
