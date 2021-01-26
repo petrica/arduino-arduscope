@@ -74,7 +74,7 @@ void loop() {
     // send data to UI
     if (acquire.hasData()) {
         oscillo.stop();
-        comms.send('v', acquire.getBuffer(), acquire.getBufferSize());
+        comms.send('v', acquire.getBuffer(), acquire.getBufferSize(), acquire.getTriggerIndex());
     }
 }
 

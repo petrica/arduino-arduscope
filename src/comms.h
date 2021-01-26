@@ -32,13 +32,18 @@ class Comms
         void receive();
 
         template<typename T>
-        void send(char key, T *values, size_t size) {
+        void send(char key, T *values, size_t size, uint16_t start_index = 0) {
             Serial.print(COMM_SEND_BEGIN_CHAR);
             Serial.print(key);
             Serial.print(COMM_SEND_SEPARATOR_CHAR);
-            for(uint16_t i = 0; i < size; i++) {
-                Serial.print(values[i]);
-                if (i + 1 < size) {
+            uint16_t index = 0;
+            for(uint16_t i = start_index; i < start_index + size; i++) {
+                index = i;
+                if (i >= size) {
+                    index = i - size;
+                }
+                Serial.print(values[index]);
+                if (i + 1 < start_index + size) {
                     Serial.print(COMM_SEND_SEPARATOR_CHAR);
                 }
             }

@@ -15,8 +15,12 @@ class Acquire
         boolean hasData();
         uint16_t getBufferSize();
         volatile uint8_t *getBuffer();
+        uint16_t getTriggerIndex();
 
     private:
+        uint8_t getPreviousValue();
+        void checkTrigger();
+
         volatile uint8_t buffer_[ACQUIRE_BUFFER_SIZE];
         uint8_t trigger_level_ = 0;
         int8_t trigger_ = 0;
@@ -24,4 +28,5 @@ class Acquire
         volatile bool has_data_ = false;
         volatile uint16_t trigger_index_ = 0;
         volatile bool is_triggered_ = false;
+        volatile bool is_first_value_ = false;
 };

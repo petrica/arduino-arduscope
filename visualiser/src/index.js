@@ -43,7 +43,6 @@ function disconnect() {
 }
 
 function action(key) {
-    console.log
     switch(key) {
         case 'connect':
                 if (comms.port) {
