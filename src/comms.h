@@ -37,13 +37,13 @@ class Comms
             Serial.print(key);
             Serial.print(COMM_SEND_SEPARATOR_CHAR);
             uint16_t index = 0;
-            for(uint16_t i = start_index; i < start_index + size; i++) {
-                index = i;
-                if (i >= size) {
-                    index = i - size;
+            for(uint16_t i = 0; i < size; i++) {
+                index = start_index + i;
+                if (index >= size) {
+                    index = index - size;
                 }
                 Serial.print(values[index]);
-                if (i + 1 < start_index + size) {
+                if (i < size) {
                     Serial.print(COMM_SEND_SEPARATOR_CHAR);
                 }
             }

@@ -4,11 +4,8 @@
 #include <generator.h>
 
 #define SERIAL_BAUD 115200
-#define BUFFER_CMD_SIZE 10
 #define ADC_PIN 0
 
-boolean is_started = false;
-char bufferCmd[BUFFER_CMD_SIZE];
 void dataReceived(char key, int16_t value);
 
 Comms comms(SERIAL_BAUD, &dataReceived);
@@ -20,7 +17,10 @@ void dataReceived(char key, int16_t value) {
     switch (key) {
         case 's':
                 // start capture
-                is_started = (boolean)value;
+                if (value > 0) {
+                    acquire.reset();
+                    oscillo.start();
+                }
             break;
         case 't':
                 // triggering type 0 - off,  -1 - falling, 1 - rising
@@ -54,24 +54,16 @@ void setup() {
     comms.begin();
     oscillo.init();
     generator.init();
-
-    advertiseCapabilities();
+    generator.start();
 
     sei();
-    generator.start();
+    advertiseCapabilities();
 }
 
 void loop() {
     comms.receive();
 
-    // start capture if setting receive
-    if (is_started) {
-        is_started = false;
-        acquire.reset();
-        oscillo.start();
-    }
-
-    // send data to UI
+    // send data to UI if available
     if (acquire.hasData()) {
         oscillo.stop();
         comms.send('v', acquire.getBuffer(), acquire.getBufferSize(), acquire.getTriggerIndex());
@@ -80,6 +72,6 @@ void loop() {
 
 ISR(ADC_vect)
 {
-	acquire.acquire(ADCH);
+    acquire.acquire(ADCH);
     TIFR1 |= 1 << OCF1B;
 }
