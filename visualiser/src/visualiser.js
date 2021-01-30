@@ -5,7 +5,7 @@ class Visualiser
     constructor(element) {
         this.chart = new Highcharts.Chart({
             chart: {
-                zoomType: 'x',
+                zoomType: 'xy',
                 renderTo: element,
                 height: 500,
                 animation: false

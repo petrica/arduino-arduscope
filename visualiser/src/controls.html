@@ -3,10 +3,10 @@
         <legend>Communication</legend>
         <label for="comm-port">Port</label>
         <div class="pure-control-group">
-            <select id="comm-port" name="port">
+            <select id="comm-port" name="port" data-bind="options: serialPorts, value: serialPort">
             </select>
             <span class="pure-form-message-inline">
-                <button id="connect" class="pure-button">Connect</button>
+                <button id="connect" class="pure-button" data-bind="click: connect,text: isConnected() ? 'Disconnect' : 'Connect'"></button>
             </span>
         </div>
     </fieldset>
@@ -16,21 +16,28 @@
             <div class="pure-u-1-2">
                 <label for="sample-rate">Sample Rate</label>
                 <div class="pure-control-group">
-                    <select id="sample-rate" name="rampleRate">
+                    <select id="sample-rate" name="rampleRate" data-bind="options: sampleRates,
+                        optionsText: function (item) {
+                            if (item >= 1000) return Math.round(item / 1000) + ' KHz';
+                            else return item + ' Hz';
+                        }, 
+                        value: sampleRate">
                     </select>
-                    <span class="pure-form-message-inline" id="sample-rate-info"></span>
+                    <span class="pure-form-message-inline" data-bind="text: sampleRateInfo"></span>
                 </div>
             </div>
             <div class="pure-u-1-2">
                 <label>Trigger</label>
                 <label for="trigger-off" class="pure-radio">
-                    <input type="radio" id="trigger-off" name="triggering" value="0" checked="" /> OFF</label>
+                    <input type="radio" id="trigger-off" name="triggering" value="0" data-bind="checked: trigger"/> OFF</label>
                 <label for="trigger-rise" class="pure-radio">
-                    <input type="radio" id="trigger-rise" name="triggering" value="1" /> Rise</label>
+                    <input type="radio" id="trigger-rise" name="triggering" value="1" data-bind="checked: trigger"/> Rise</label>
                 <label for="trigger-fall" class="pure-radio">
-                    <input type="radio" id="trigger-fall" name="triggering" value="-1" /> Fall</label>
+                    <input type="radio" id="trigger-fall" name="triggering" value="-1" data-bind="checked: trigger"/> Fall</label>
                 <label for="trigger-level">Level</label>
-                <select id="trigger-level" name="triggerLevel"></select>    
+                <select id="trigger-level" name="triggerLevel" data-bind="options: triggerLevels, 
+                    optionsText: 'value', 
+                    value: triggerLevel"></select>    
             </div>
         </div>
     </fieldset>
@@ -43,6 +50,7 @@
         </span>
     </fieldset>
     <fieldset>
-        <button id="acquire" class="button-xlarge pure-button pure-button-primary">Acquire</button>
+        <button id="acquire" class="button-xlarge pure-button" 
+            data-bind="click: acquire, text: isAcquire() ? 'Stop' : 'Acquire', class: acquireCssClass"></button>
     </fieldset>
 </div>
