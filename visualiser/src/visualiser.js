@@ -1,73 +1,72 @@
-import Chart from 'chart.js';
+import Highcharts from 'highcharts'
 
 class Visualiser
 {
     constructor(element) {
-        this.chart = new Chart(element, {
-            // The type of chart we want to create
-            type: 'line',
-            responsive: true,
-        
-            // The data for our dataset
-            data: {
-                datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    fill: false,
-                    lineTension: 0,
-                    borderWidth: 1.5
-                }]
+        this.chart = new Highcharts.Chart({
+            chart: {
+                zoomType: 'x',
+                renderTo: element,
+                height: 500,
+                animation: false
             },
-        
-            // Configuration options go here
-            options: {
-                tooltips: {
-                    enabled: false
+            title: {
+                text: 'Oscilloscope'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'time',
+                units: [[
+                    'milliseconds'
+                ]]
+            },
+            yAxis: {
+                title: {
+                    text: 'Volts'
                 },
-                elements: {
-                    point: {
-                        radius: 1,
-                        hoverRadius: 1
-                    },
-                    line: {
-                        lineTension: 0,
-                        showLine: false
-                    }
-                },
-                animation: {
-                    duration: 0
-                },
-                legend: false,
-                scales: {
-                    yAxes: [
-                        {
-                            gridLines: {
-                                display: false
-                            },
-                            ticks: {
-                                suggestedMin: 0,
-                                suggestedMax: 255
-                            }
-                        }
-                    ],
-                    xAxes: {
-                        type: 'time',
-                        distribution: 'series',
-                        gridLines: {
-                            display: false
+                max: 6,
+                min: -1
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
                         },
-                        ticks: {
-                            autoSkip: false,
-                            display: true,
-                            major: {
-                                display: true
-                            }
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
                         }
-                    }
+                    },
+                    threshold: null
+                },
+                series: {
+                    animation: false
                 }
-            }
-        });
+            },
+
+            series: [{
+                type: 'line'
+            }]
+        }); 
     };
 
     /**
@@ -80,17 +79,15 @@ class Visualiser
     };
 
     display(buffer) {
-        const msPerPoint = 1000 / this.sampleRate;
-        var labels = [];
+        const pointInterval = 1000 / this.sampleRate;
         for(var i = 0; i < buffer.length; i++) {
-            var label = "";
-            label = i * msPerPoint + "ms";
-            labels.push(label);
+            buffer[i] = 5/255 * parseInt(buffer[i]);
         };
-
-        this.chart.data.labels = labels;
-        this.chart.data.datasets[0].data = buffer;
-        this.chart.update();
+        this.chart.series[0].update({
+            pointStart: 0,
+            pointInterval: pointInterval,
+            data: buffer
+        });
     }
 }
 

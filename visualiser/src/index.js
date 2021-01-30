@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 document.body.innerHTML = html;
 
-const visualiser = new Visualiser($('#chart'));
+const visualiser = new Visualiser('chart');
 const controls = new Controls('#form-placeholder', action);
 const comms = new Comms(receive);
 var isAcquire = false;
