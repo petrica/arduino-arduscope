@@ -14,6 +14,15 @@ class Controls
 
     init() {
         this.initTriggerLevels();
+        this.initTriggerPaddings();
+        
+        this.viewModel.triggerLevel.subscribe(() => {
+            this.callback.call(this, 'trigger');
+        });
+
+        this.viewModel.trigger.subscribe(() => {
+            this.callback.call(this, 'trigger');
+        });
     }
 
     initTriggerLevels() {
@@ -25,6 +34,13 @@ class Controls
                 value: i / 10 + ' V'
             })
         }
+    }
+
+    initTriggerPaddings() {
+        for(var i = -50; i <= 50; i += 25) {
+            this.viewModel.triggerPaddings.push(i);
+        }
+        this.viewModel.triggerPadding(0);
     }
 
     getViewModel() {
@@ -43,6 +59,8 @@ class Controls
             }, this),
             triggerLevels: ko.observableArray(),
             triggerLevel: ko.observable(),
+            triggerPaddings: ko.observableArray(),
+            triggerPadding: ko.observable(0),
             serialPorts: ko.observableArray(),
             serialPort: ko.observable(),
             isConnected: ko.observable(false),
@@ -84,11 +102,11 @@ class Controls
     }
 
     getTriggerLevel() {
-        return this.viewModel.triggerLevel();
+        return this.viewModel.triggerLevel().key;
     }
 
     getTrigger() {
-        return this.viewModel.triggerLevel();
+        return this.viewModel.trigger();
     }
 
     getSampleRate() {

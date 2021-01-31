@@ -11,7 +11,7 @@ class Visualiser
                 animation: false
             },
             title: {
-                text: 'Oscilloscope'
+                text: 'ArduScope'
             },
             subtitle: {
                 text: document.ontouchstart === undefined ?
@@ -19,6 +19,9 @@ class Visualiser
             },
             xAxis: {
                 type: 'time',
+                title: {
+                    text: 'Milliseconds'
+                },
                 units: [[
                     'milliseconds'
                 ]]
@@ -64,8 +67,14 @@ class Visualiser
             },
 
             series: [{
-                type: 'line'
-            }]
+                    type: 'line',
+                    name: 'Scope'
+                },
+                {
+                    type: 'line',
+                    name: 'Trigger'
+                }
+            ]
         }); 
     };
 
@@ -77,6 +86,14 @@ class Visualiser
     setSampleRate(sampleRate) {
         this.sampleRate = sampleRate;
     };
+
+    showTrigger(triggerLevel) {
+
+    }
+
+    hideTrigger() {
+        
+    }
 
     display(buffer) {
         const pointInterval = 1000 / this.sampleRate;

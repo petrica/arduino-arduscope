@@ -21,7 +21,8 @@
                             if (item >= 1000) return Math.round(item / 1000) + ' KHz';
                             else return item + ' Hz';
                         }, 
-                        value: sampleRate">
+                        value: sampleRate,
+                        attr: { disabled: !isConnected() }">
                     </select>
                     <span class="pure-form-message-inline" data-bind="text: sampleRateInfo"></span>
                 </div>
@@ -29,25 +30,30 @@
             <div class="pure-u-1-2">
                 <label>Trigger</label>
                 <label for="trigger-off" class="pure-radio">
-                    <input type="radio" id="trigger-off" name="triggering" value="0" data-bind="checked: trigger"/> OFF</label>
+                    <input type="radio" id="trigger-off" name="triggering" value="0" data-bind="checked: trigger, attr: { disabled: !isConnected() }"/> OFF</label>
                 <label for="trigger-rise" class="pure-radio">
-                    <input type="radio" id="trigger-rise" name="triggering" value="1" data-bind="checked: trigger"/> Rise</label>
+                    <input type="radio" id="trigger-rise" name="triggering" value="1" data-bind="checked: trigger, attr: { disabled: !isConnected() }"/> Rise</label>
                 <label for="trigger-fall" class="pure-radio">
-                    <input type="radio" id="trigger-fall" name="triggering" value="-1" data-bind="checked: trigger"/> Fall</label>
+                    <input type="radio" id="trigger-fall" name="triggering" value="-1" data-bind="checked: trigger, attr: { disabled: !isConnected() }"/> Fall</label>
                 <label for="trigger-level">Level</label>
                 <select id="trigger-level" name="triggerLevel" data-bind="options: triggerLevels, 
                     optionsText: 'value', 
-                    value: triggerLevel"></select>    
+                    value: triggerLevel,
+                    attr: { disabled: trigger() == 0 }"></select>    
+                <label for="trigger-padding">Padding</label>
+                <select id="trigger-padding" name="triggerPadding" data-bind="options: triggerPaddings, 
+                    optionsText: function (item) {
+                        return item + '%'
+                    },
+                    value: triggerPadding,
+                    attr: { disabled: trigger() == 0 }"></select>    
             </div>
         </div>
     </fieldset>
     <fieldset class="pure-form-aligned">
         <legend>Recordings</legend> 
         <button id="save" class="pure-button">Save current slope</button>
-        <span class="pure-form-message-inline">
-            <label for="save-display">
-                <input type="checkbox" name="save-display" id="save-display"/> show saved slope</label>
-        </span>
+        <button id="delete" class="pure-button">Delete saved slope</button>
     </fieldset>
     <fieldset>
         <button id="acquire" class="button-xlarge pure-button" 

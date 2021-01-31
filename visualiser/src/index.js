@@ -62,6 +62,14 @@ function action(key) {
                     isAcquire = false;
                 }
             break;
+        case 'trigger':
+                if (controls.getTrigger() != 0) {
+                    visualiser.showTrigger(controls.getTriggerLevel());
+                }
+                else {
+                    visualiser.hideTrigger();
+                }
+            break;
 
     }
 }
