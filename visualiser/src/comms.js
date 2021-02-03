@@ -1,11 +1,9 @@
 import _ from 'lodash'
 import Daemon from 'arduino-create-agent-js-client';
 
-const SEND_PACKET_START_CHAR = 'V';
-const SEND_PACKET_END_CHAR = ';';
-const RECEIVE_PACKET_START_CHAR = 'S';
-const RECEIVE_PACKET_END_CHAR = 'E';
-const RECEIVE_PACKET_SPLIT_CHAR = ';';
+const PACKET_START_CHAR = '(';
+const PACKET_END_CHAR = ')';
+const PACKET_SPLIT_CHAR = ';';
 const MAX_BUFFER_SIZE = 10000;
 const SERIAL_RATE = 115200;
 
@@ -43,7 +41,7 @@ class Comms
     send(key, value) {
         if (this.port) {
             this.arduinoAgent.writeSerial(this.port, 
-                SEND_PACKET_START_CHAR + key + value + SEND_PACKET_END_CHAR);
+                PACKET_START_CHAR + key + value + PACKET_END_CHAR);
         }
     }
 
@@ -59,8 +57,8 @@ class Comms
     }
 
     onMessage(message) {
-        message.split(RECEIVE_PACKET_START_CHAR).forEach((packet, index) => {
-            const end = packet.indexOf(RECEIVE_PACKET_END_CHAR);
+        message.split(PACKET_START_CHAR).forEach((packet, index) => {
+            const end = packet.indexOf(PACKET_END_CHAR);
             // we have another packet started
             if (index > 0) {
                 this.buffer = "";
@@ -70,7 +68,7 @@ class Comms
                 var key;
                 var value = [];
                 this.buffer += packet.substr(0, end);
-                this.buffer.split(RECEIVE_PACKET_SPLIT_CHAR).forEach((part, i) => {
+                this.buffer.split(PACKET_SPLIT_CHAR).forEach((part, i) => {
                     if (i == 0) key = part;
                     else {
                         value.push(part);

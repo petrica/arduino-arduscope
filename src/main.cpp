@@ -67,6 +67,7 @@ void loop() {
     if (acquire.hasData()) {
         oscillo.stop();
         comms.send('v', acquire.getBuffer(), acquire.getBufferSize(), acquire.getTriggerIndex());
+        acquire.reset();
     }
 }
 

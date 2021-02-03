@@ -132,6 +132,10 @@ class Controls
     setIsAcquire(isAcquire) {
         this.viewModel.isAcquire(isAcquire);
     }
+
+    isAcquire() {
+        return this.viewModel.isAcquire();
+    }
 }
 
 export default Controls;

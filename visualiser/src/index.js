@@ -16,8 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 document.body.innerHTML = html;
 
-const visualiser = new Visualiser('chart');
-const controls = new Controls('#form-placeholder', action);
+const visualiser = new Visualiser('chart', 5);
+const controls = new Controls('#form-placeholder', control);
 const comms = new Comms(receive);
 var isAcquire = false;
 
@@ -42,7 +42,7 @@ function disconnect() {
     controls.setConnected(false);
 }
 
-function action(key) {
+function control(key) {
     switch(key) {
         case 'connect':
                 if (comms.port) {
@@ -69,6 +69,8 @@ function action(key) {
                 else {
                     visualiser.hideTrigger();
                 }
+
+                if (controls.isAcquire()) acquire();
             break;
 
     }

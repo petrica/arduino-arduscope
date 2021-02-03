@@ -21,7 +21,6 @@ void Acquire::setTriggerLevel(uint8_t trigger_level) {
 }
 
 volatile uint8_t *Acquire::getBuffer() {
-    has_data_ = false;
     return buffer_;
 }
 
@@ -66,6 +65,8 @@ void Acquire::checkTrigger() {
 }
 
 void Acquire::acquire(uint8_t value) {
+    if (has_data_) return;
+
     buffer_[buffer_cursor_] = value;
 
     if (trigger_ != 0 && !is_triggered_ && !is_first_value_) {

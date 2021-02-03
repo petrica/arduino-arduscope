@@ -8,24 +8,24 @@ void Comms::begin() {
 }
 
 void Comms::send(char key, uint32_t value) {
-    Serial.print(COMM_SEND_BEGIN_CHAR);
+    Serial.print(COMM_BEGIN_CHAR);
     Serial.print(key);
-    Serial.print(COMM_SEND_SEPARATOR_CHAR);
+    Serial.print(COMM_SEPARATOR_CHAR);
     Serial.print(value);
-    Serial.print(COMM_SEND_END_CHAR);
+    Serial.print(COMM_END_CHAR);
 }
 
 void Comms::receive() {
     if (Serial.available() > 0) {
         char temp_ = Serial.read();
         // start of packet, reset buffer
-        if (temp_ == COMM_RECEIVE_BEGIN_CHAR) {
+        if (temp_ == COMM_BEGIN_CHAR) {
             is_packet_started_ = true;
             buffer_[0] = '\0';
         }
         else if (is_packet_started_ && strlen(buffer_) < COMM_BUFFER_SIZE) {
             // end of packet
-            if (temp_ == COMM_RECEIVE_END_CHAR) {
+            if (temp_ == COMM_END_CHAR) {
                 decodePacket();
                 is_packet_started_ = false;
             }

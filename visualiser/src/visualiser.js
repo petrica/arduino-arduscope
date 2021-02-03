@@ -2,10 +2,10 @@ import Highcharts from 'highcharts'
 
 class Visualiser
 {
-    constructor(element) {
+    constructor(element, vcc) {
         this.chart = new Highcharts.Chart({
             chart: {
-                zoomType: 'xy',
+                zoomType: 'x',
                 renderTo: element,
                 height: 500,
                 animation: false
@@ -75,7 +75,8 @@ class Visualiser
                     name: 'Trigger'
                 }
             ]
-        }); 
+        });
+        this.vcc = vcc;
     };
 
     /**
@@ -88,17 +89,25 @@ class Visualiser
     };
 
     showTrigger(triggerLevel) {
-
+        var level = this.vcc/255 * triggerLevel;
+        var line = [];
+        line[0] = level;
+        this.chart.series[1].update({
+            pointStart: 0,
+            data: line
+        });
     }
 
     hideTrigger() {
-        
+        this.chart.series[1].update({
+            data: []
+        });
     }
 
     display(buffer) {
         const pointInterval = 1000 / this.sampleRate;
         for(var i = 0; i < buffer.length; i++) {
-            buffer[i] = 5/255 * parseInt(buffer[i]);
+            buffer[i] = this.vcc/255 * parseInt(buffer[i]);
         };
         this.chart.series[0].update({
             pointStart: 0,
