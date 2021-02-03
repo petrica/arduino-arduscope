@@ -59,7 +59,7 @@ function control(key) {
                 }
                 else if (isAcquire) {
                     controls.setIsAcquire(false);
-                    isAcquire = false;
+                    acquire(false);
                 }
             break;
         case 'trigger':
@@ -76,14 +76,14 @@ function control(key) {
     }
 }
 
-function acquire() {
-    isAcquire = true;
+function acquire(acquire = true) {
+    isAcquire = acquire;
     visualiser.setSampleRate(controls.getSampleRate());
 
     comms.send('r', controls.getSampleRate());
     comms.send('t', controls.getTrigger());
     comms.send('l', controls.getTriggerLevel());
-    comms.send('s', 1);
+    comms.send('s', acquire ? 1 : 0);
 }
 
 function receive(key, value) {

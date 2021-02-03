@@ -21,6 +21,9 @@ void dataReceived(char key, int16_t value) {
                     acquire.reset();
                     oscillo.start();
                 }
+                else {
+                    oscillo.stop();
+                }
             break;
         case 't':
                 // triggering type 0 - off,  -1 - falling, 1 - rising
