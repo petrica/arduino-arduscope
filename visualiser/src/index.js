@@ -1,4 +1,4 @@
-import _, { curry, isNumber } from 'lodash';
+import _ from 'lodash';
 import 'purecss';
 import './style.css';
 import html from './index.html';
