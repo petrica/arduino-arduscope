@@ -39,14 +39,7 @@
                 <select id="trigger-level" name="triggerLevel" data-bind="options: triggerLevels, 
                     optionsText: 'value', 
                     value: triggerLevel,
-                    attr: { disabled: trigger() == 0 }"></select>    
-                <label for="trigger-padding">Padding</label>
-                <select id="trigger-padding" name="triggerPadding" data-bind="options: triggerPaddings, 
-                    optionsText: function (item) {
-                        return item + '%'
-                    },
-                    value: triggerPadding,
-                    attr: { disabled: trigger() == 0 }"></select>    
+                    attr: { disabled: trigger() == 0 }"></select>
             </div>
         </div>
     </fieldset>

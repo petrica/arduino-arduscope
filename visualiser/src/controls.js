@@ -14,7 +14,6 @@ class Controls
 
     init() {
         this.initTriggerLevels();
-        this.initTriggerPaddings();
         
         this.viewModel.triggerLevel.subscribe(() => {
             this.callback.call(this, 'trigger');
@@ -36,13 +35,6 @@ class Controls
         }
     }
 
-    initTriggerPaddings() {
-        for(var i = -50; i <= 50; i += 25) {
-            this.viewModel.triggerPaddings.push(i);
-        }
-        this.viewModel.triggerPadding(0);
-    }
-
     getViewModel() {
         return {
             bufferSize: ko.observable(0),
@@ -59,8 +51,6 @@ class Controls
             }, this),
             triggerLevels: ko.observableArray(),
             triggerLevel: ko.observable(),
-            triggerPaddings: ko.observableArray(),
-            triggerPadding: ko.observable(0),
             serialPorts: ko.observableArray(),
             serialPort: ko.observable(),
             isConnected: ko.observable(false),
