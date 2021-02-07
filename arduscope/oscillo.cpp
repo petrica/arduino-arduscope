@@ -1,4 +1,4 @@
-#include <oscillo.h>
+#include "oscillo.h"
 
 Oscillo::Oscillo(uint8_t in_pin): in_pin_(in_pin) {
 }

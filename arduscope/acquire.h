@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include "Arduino.h"
 
 #ifndef ACQUIRE_BUFFER_SIZE
 #define ACQUIRE_BUFFER_SIZE 1000

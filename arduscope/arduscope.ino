@@ -1,7 +1,7 @@
-#include <comms.h>
-#include <oscillo.h>
-#include <acquire.h>
-#include <generator.h>
+#include "comms.h"
+#include "oscillo.h"
+#include "acquire.h"
+#include "generator.h"
 
 #define SERIAL_BAUD 115200
 #define ADC_PIN 0
