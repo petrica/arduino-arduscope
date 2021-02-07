@@ -34,7 +34,7 @@ class Visualiser
                 min: -1
             },
             legend: {
-                enabled: false
+                enabled: true
             },
             plotOptions: {
                 area: {
@@ -77,7 +77,14 @@ class Visualiser
             ]
         });
         this.vcc = vcc;
+        this.isTrigger = false;
+        this.triggerValue = 0;
+        this.buffer = [];
     };
+
+    setBufferSize(bufferSize) {
+        this.bufferSize = bufferSize;
+    }
 
     /**
      * Unit of measurement: number of milliseconds / division
@@ -88,32 +95,47 @@ class Visualiser
         this.sampleRate = sampleRate;
     };
 
+    getPointInterval() {
+        return 1000 / this.sampleRate;
+    }
+
     showTrigger(triggerLevel) {
+        this.isTrigger = true;
+        this.triggerValue = triggerLevel;
         var level = this.vcc/255 * triggerLevel;
         var line = [];
-        line[0] = level;
+        for(var i = 0; i < this.buffer.length; i++) {
+            line[i] = level;
+        }
         this.chart.series[1].update({
+            pointInterval: this.getPointInterval(),
             pointStart: 0,
-            data: line
+            data: line,
+            dashStyle: 'ShortDot'
         });
     }
 
     hideTrigger() {
+        this.isTrigger = false;
         this.chart.series[1].update({
             data: []
         });
     }
 
     display(buffer) {
-        const pointInterval = 1000 / this.sampleRate;
+        this.buffer = [];
         for(var i = 0; i < buffer.length; i++) {
-            buffer[i] = this.vcc/255 * parseInt(buffer[i]);
+            this.buffer.push(this.vcc/255 * parseInt(buffer[i]));
         };
         this.chart.series[0].update({
             pointStart: 0,
-            pointInterval: pointInterval,
-            data: buffer
+            pointInterval: this.getPointInterval(),
+            data: this.buffer
         });
+
+        if (this.isTrigger) {
+            this.showTrigger(this.triggerValue);
+        }
     }
 }
 

@@ -3,15 +3,25 @@
     right: 0;
     top: 0;
     width: 400px;
-    background: #f6f6f6
+    background: #f6f6f6;
+    min-height: 500px;
 }
 
 #controls .pure-form {
     padding: 1em;
+    margin-bottom: 60px;
 }
 
 #chart {
     margin-right: 400px;
+}
+
+#acquire {
+    position: absolute;
+    bottom: 16px;
+    display: block;
+    left: 16px;
+    width: 370px;
 }
 
 .button-xlarge {

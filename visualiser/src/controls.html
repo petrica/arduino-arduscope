@@ -3,7 +3,7 @@
         <legend>Communication</legend>
         <label for="comm-port">Port</label>
         <div class="pure-control-group">
-            <select id="comm-port" name="port" data-bind="options: serialPorts, value: serialPort">
+            <select id="comm-port" name="port" data-bind="options: serialPorts, value: serialPort, attr: { disabled: !hasAgent() }">
             </select>
             <span class="pure-form-message-inline">
                 <button id="connect" class="pure-button" data-bind="click: connect,text: isConnected() ? 'Disconnect' : 'Connect'"></button>
@@ -39,15 +39,15 @@
                 <select id="trigger-level" name="triggerLevel" data-bind="options: triggerLevels, 
                     optionsText: 'value', 
                     value: triggerLevel,
-                    attr: { disabled: trigger() == 0 }"></select>
+                    attr: { disabled: !isConnected() || trigger() == 0 }"></select>
             </div>
         </div>
     </fieldset>
-    <fieldset class="pure-form-aligned">
+    <!-- <fieldset class="pure-form-aligned">
         <legend>Recordings</legend> 
         <button id="save" class="pure-button">Save current slope</button>
         <button id="delete" class="pure-button">Delete saved slope</button>
-    </fieldset>
+    </fieldset> -->
     <button id="acquire" class="button-xlarge pure-button" 
-        data-bind="click: acquire, text: isAcquire() ? 'Stop' : 'Acquire', class: acquireCssClass"></button>
+        data-bind="click: acquire, text: isAcquire() ? 'Stop' : 'Acquire', class: acquireCssClass, attr: { disabled: !isConnected() }"></button>
 </div>

@@ -19,7 +19,6 @@ document.body.innerHTML = html;
 const visualiser = new Visualiser('chart', 5);
 const controls = new Controls('#controls', control);
 const comms = new Comms(receive);
-var isAcquire = false;
 
 controls.init();
 comms.init();
@@ -33,13 +32,14 @@ function connect() {
 
     if (port) {
         comms.connect(port);
-        controls.setConnected(true);
+        controls.setIsConnected(true);
     }
 }
 
 function disconnect() {
     comms.disconnect();
-    controls.setConnected(false);
+    controls.setIsConnected(false);
+    controls.setIsAcquire(false);
 }
 
 function control(key) {
@@ -53,12 +53,10 @@ function control(key) {
                 }
             break;
         case 'acquire':
-                if (comms.port && !isAcquire) {
-                    controls.setIsAcquire(true);
-                    acquire();
+                if (comms.port && !controls.isAcquire()) {
+                    acquire(true);
                 }
-                else if (isAcquire) {
-                    controls.setIsAcquire(false);
+                else if (controls.isAcquire()) {
                     acquire(false);
                 }
             break;
@@ -72,12 +70,11 @@ function control(key) {
 
                 if (controls.isAcquire()) acquire();
             break;
-
     }
 }
 
 function acquire(acquire = true) {
-    isAcquire = acquire;
+    controls.setIsAcquire(acquire);
     visualiser.setSampleRate(controls.getSampleRate());
 
     comms.send('r', controls.getSampleRate());
@@ -89,21 +86,29 @@ function acquire(acquire = true) {
 function receive(key, value) {
     switch(key) {
         case 's':
+                // sample rate values
                 controls.setSampleRates(value);
             break;
         case 'b':
                 // buffer size
                 controls.setBufferSize(value);
-            break;
-        case 'ports':
-                controls.setSerialPorts(value);
-            break;
-        case 't':
-                console.log('Timer', value);
+                visualiser.setBufferSize(value);
             break;
         case 'v':
                 visualiser.display(value);
-                if (isAcquire) acquire();
+                if (controls.isAcquire()) acquire(true);
+            break;
+        case 'ports':
+                controls.setSerialPorts(value);
+                if (controls.getSerialPort() != comms.port) {
+                    disconnect();
+                }
+            break;
+        case 'agent':
+                controls.setHasAgent(value);
+                if (!value) {
+                    disconnect();   
+                }
             break;
     }
 };

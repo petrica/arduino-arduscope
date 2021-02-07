@@ -56,6 +56,7 @@ class Controls
             isConnected: ko.observable(false),
             isAcquire: ko.observable(false),
             trigger: ko.observable("0"),
+            hasAgent: ko.observable(false),
             connect: () => {
                 this.callback.call(this, 'connect');
             },
@@ -115,7 +116,7 @@ class Controls
         this.viewModel.bufferSize(bufferSize);
     }
 
-    setConnected(value) {
+    setIsConnected(value) {
         this.viewModel.isConnected(value);
     }
 
@@ -125,6 +126,10 @@ class Controls
 
     isAcquire() {
         return this.viewModel.isAcquire();
+    }
+
+    setHasAgent(hasAgent) {
+        this.viewModel.hasAgent(hasAgent);
     }
 }
 

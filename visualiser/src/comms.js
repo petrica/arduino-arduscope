@@ -20,10 +20,7 @@ class Comms
     init() {
         this.arduinoAgent.serialMonitorMessages.subscribe(_.bind(this.onMessage, this));
         this.arduinoAgent.devicesList.subscribe(_.bind(this.onDeviceList, this));
-
-        this.arduinoAgent.agentFound.subscribe(status => {
-            console.log("Agent found: " + status);
-        });
+        this.arduinoAgent.agentFound.subscribe(_.bind(this.onAgentFound, this));
     }
 
     connect(port) {
@@ -49,6 +46,10 @@ class Comms
         return new Promise((resolve) => {
             this.resolveMessage.push(resolve);
         });
+    }
+
+    onAgentFound(status) {
+        this.receiveCallback.call(this, 'agent', status);
     }
 
     onDeviceList({serial}) {
