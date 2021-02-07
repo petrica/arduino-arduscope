@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 document.body.innerHTML = html;
 
 const visualiser = new Visualiser('chart', 5);
-const controls = new Controls('#form-placeholder', control);
+const controls = new Controls('#controls', control);
 const comms = new Comms(receive);
 var isAcquire = false;
 

@@ -1,3 +1,19 @@
+#controls {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 400px;
+    background: #f6f6f6
+}
+
+#controls .pure-form {
+    padding: 1em;
+}
+
+#chart {
+    margin-right: 400px;
+}
+
 .button-xlarge {
     font-size: 125%;
     width: 100%;
