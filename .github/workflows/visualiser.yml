@@ -27,6 +27,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
-          
-      - run: npm ci
-      - run: npm run build
+
+      - run: |
+          pwd
+          npm ci
+          npm run build
