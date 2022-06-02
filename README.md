@@ -8,7 +8,6 @@ Open up the [client application](https://petrica.github.io/arduino-arduscope/)
 
 If you are in a possession of an Arduino Uno board, you should be able to start analysing signals in just a few minutes by following this guide.
 1. Burn the <a href="https://create.arduino.cc/editor/petrica/9526d9c0-3c3b-4b43-b31f-138ef5fb6f5e/preview" target="_blank">Arduscope firmware</a> to your Arudino Uno board.
-<iframe src=https://create.arduino.cc/editor/petrica/9526d9c0-3c3b-4b43-b31f-138ef5fb6f5e/preview?embed style="height:410px;width:100%;margin:10px 0" frameborder=0></iframe>
 
 2. <a href="https://create.arduino.cc/getting-started/plugin/welcome" target="_blank">Install Arduino Create Agent</a>. A piece of software that handles the serial communication between the Arduino board and the Arduscope web interface. <a href="https://github.com/arduino/arduino-create-agent" target="_blank">Github sources here</a>. 
 
